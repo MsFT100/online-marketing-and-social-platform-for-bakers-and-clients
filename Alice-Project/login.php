@@ -34,7 +34,7 @@ include_once 'header.php';
 
     <div class="container">
         <div class="login-form">
-            <form method="post" action="includes/login.inc.php">
+            <form method="post" action="includes/login.inc.php" class="enter-form">
             
                 <div class="loginForm" >
                     <h2>Login</h2>
