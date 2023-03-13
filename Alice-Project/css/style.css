@@ -25,7 +25,8 @@ body{
 }
 .navbar{
   
-  height: 300px;
+  height: max-content;
+  min-height: 100px;
   background-color: #fa4299;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
@@ -54,10 +55,12 @@ body{
 
 .navparent li a{
     display: block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
-    margin: 5px;
+    margin: 5px 5px;
+    width: 80%;
+    height: 35px;
     border-radius: 5px;
     font-size: 15px;
 	  text-decoration: none;
@@ -65,24 +68,25 @@ body{
 
 }
 .navparent li a:hover{
-    background-color: cadetblue;
+    background-color: #ddd;
     
 }
 
 /* Dropdown button */
 .dropbtn {
-    background-color: #fff;
+    background-color: transparent;
     color: black;
     padding: 14px 16px;
     font-size: 15px;
     border: none;
+    border-radius: 2px;
     cursor: pointer;
     transition: 0.5s;
   }
   
   /*.dropbtn*/
   .dropbtn:hover{
-    background-color: cadetblue;
+    background-color: #ccc;
   }
  
  
@@ -101,17 +105,18 @@ body{
     display: none;
     position: absolute;
     z-index: 1;
-    background-color: #2e2e2e;
-    min-width: 160px;
+    background-color: #fff;
+    border-radius: 2px;
+    width: 200px;
     
   }
   
   /* Links inside the dropdown */
   .dropdown-content a {
-    color: white;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    color: black;
   }
   
   /* Change color of dropdown links on hover */
@@ -126,6 +131,7 @@ body{
     padding: 14px 16px;
     font-size: 144px;
     border: none;
+    border-radius: 2px;
     cursor: pointer;
     transition: 0.5s;
   }
@@ -140,19 +146,19 @@ body{
   }
   /*sign in button*/
   .signin-btn{
-    color:white;
-    background-color: transparent;
+    color: black;
+    background-color: #fff;
     border: none;
     border-radius: 5px;
     font-size: 15px;
-    width: 150px;
-    height: 50px;
+    width: 80%;
+    height: 35px;
     padding: 14px 16px;
-    margin: 10px 10px;
+    margin: 5px 5px;
     cursor: pointer;
   }
   .signin-btn:hover{
-    background-color: cadetblue;
+    background-color: #ddd;
 
   }
   /*vertical line*/
@@ -451,7 +457,8 @@ body{
 .sell-item{
   width: 100%;
   height: 100%;
-  background-color: #ccc;
+  background-color: #fff;
+  background-image: 'images/uploadedImages/cake.jpg';
   display: flex;
   align-items: center;
   justify-content: center;

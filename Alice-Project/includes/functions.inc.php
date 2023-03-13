@@ -142,8 +142,11 @@ function changeProfile($conn, $profilePic, $email, $address, $about){
         $file_size = $_FILES["profile_pic"]["size"];
         $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
         $allowed_exts = array("jpg", "jpeg", "png");
-        $upload_dir = "./images/profilepics/";
+        $upload_dir = '../images/profilepics/';
+        //$upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/images/profilepics/';
+
         $upload_path = $upload_dir . $userid . "." . $file_ext;
+        
 
         if (!in_array(strtolower($file_ext), $allowed_exts) || $file_size > 500000) {
             // handle error
@@ -175,6 +178,7 @@ function changeProfile($conn, $profilePic, $email, $address, $about){
         }
         
         $profilePic = $upload_path;
+         
     }
 
     $update_query = "UPDATE users SET usersEmail=?, about=?, adress=?, user_image=? WHERE usersUid=?";
@@ -182,7 +186,7 @@ function changeProfile($conn, $profilePic, $email, $address, $about){
     mysqli_stmt_bind_param($stmt, "ssssi", $email, $about, $address, $profilePic, $userid);
     mysqli_stmt_execute($stmt);
 
-    if (mysqli_stmt_affected_rows($stmt) > 0) {
+    if (mysqli_stmt_affected_rows($stmt) >= 0) {
         header("Location: ../profile.php?success=updated");
     } else {
         echo "Error updating profile: " . mysqli_error($conn);

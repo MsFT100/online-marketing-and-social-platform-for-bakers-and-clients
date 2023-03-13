@@ -30,7 +30,12 @@ include 'header.php';
                 </li>
                 
                 <li><span class="vertical-line"></span><li>
-                
+                <li class="dropdown">
+                    <button class="dropbtn">Shop</button>
+                    <div class="dropdown-content">
+                        <a href="index.php">Shop</a>
+                    </div>
+                </li>
                     
                 <li class="dropdown">
                     <button class="dropbtn">Help</button>

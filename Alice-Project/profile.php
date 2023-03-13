@@ -61,8 +61,11 @@ include 'header.php';
     
         <div class="section-prof">
 
-            <img src="<?php echo $profilePic ? $profilePic : 'images/icons/no-user.jpg'; ?>" class="dashboard-pic" alt="defaultImage">
+            
+            <img src="<?php
+            $filename = basename($profilePic);
 
+            echo 'images/profilepics/' .$filename; ?>"class="dashboard-pic" alt="defaultImage">
 
 
             <div class="profile-card">
