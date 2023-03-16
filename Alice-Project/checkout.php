@@ -1,5 +1,6 @@
 <?php
 include 'header.php';
+session_start();
 ?>
 <body>
 
@@ -50,26 +51,6 @@ include 'header.php';
                     ?>
 
                 </li>
-                <li class="dropdown">
-                    <?php
-                    $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
-                    $cartCount = count($cart);
-
-                    // check if user is logged in
-                    if(isset($_SESSION['username'])) {
-                        echo '<button class="dropbtn" onclick="loginPage(\'cart.php\')">cart</button>';
-                        echo '<div class="dropdown-content">';
-                        echo '<a href="cart.php">
-                        <i class="fa fa-shopping-cart"></i>
-                        <span class="cart-count"><?php echo $cartCount; ?></span>
-                        </a>';
-                        echo '</div>';
-                    }
-                    
-                    ?>
-                    
-                  
-                </li>
                 
                 <li class="dropdown">
                     <button class="dropbtn">Help</button>
@@ -95,56 +76,87 @@ include 'header.php';
                     </div>
                     </form>
             </div>
-        </nav>
-
-        
+        </nav> 
     </header>
     <div class="container">
-        <div class="search-area">
+        
+        <div class="title">
+            <h2>shopping list</h2>
+        </div>
+        <div class="shoppinglist">
+
             <?php
-            
+                // Retrieve the cart items from the localStorage object
+                $cartItems = isset($_SESSION['cart']) ? json_decode(json_encode($_SESSION['cart']), true) : array();
 
-            // Check if there are search results to display
-           if (isset($_GET['results'])) {
+                // Initialize total price
+                $totalPrice = 0;
 
-            // Decode the search results from the query string parameter
-            $searchResults = json_decode($_GET['results'], true);
-
-            // Display the search results
-            if (count($searchResults) > 0) {
-                echo "<div class='cards-container'>";
-                foreach ($searchResults as $result) {
-                    echo "<div class='card'>";
-                    $filename = basename($result['item_image']);
-                    echo "<button><img class='card-img' src='images/uploadedImages/$filename' alt='defaultImage'></button>";
-                    echo "<div class='card-body'>";
-                    echo "<h5 class='card-title'>{$result['item_name']}</h5>";
-                    echo "<p class='card-price'>Ksh:{$result['item_price']}</p>";
-            
-                    //when we press the add to cart button
-                    echo "<button class='add-to-cart-btn' data-item-id='{$result['item_id']}' data-item-name='{$result['item_name']}' data-item-price='{$result['item_price']}'
-                     onclick='addToCart({$result['item_id']}, \"{$result['item_name']}\", {$result['item_price']})'>Add to cart</button>";
-                    echo "</div>"; // card-body
-                    echo "</div>"; // card
+                // Loop through the cart items and display them in a table
+                if (!empty($cartItems)) {
+                echo "<table>";
+                echo "<tr><th>Item Name</th><th>Price</th></tr>";
+                foreach ($cartItems as $item) {
+                    $itemId = $item['id'];
+                    $itemName = $item['name'];
+                    $itemPrice = $item['price'];
+                    $totalPrice += $itemPrice;
+                    //echo $itemId;
+                    echo "<tr>";
+                    echo "<tr id='item-{$itemId}'>";
+                    echo "<td>{$itemName}</td>";
+                    echo "<td>{$itemPrice}</td>";
+                    echo "</tr>";
                 }
-                echo "</div>"; // cards-container
-            } else {
-                echo "<p class='no-results'>No results found.</p>";
-            }
-        }
-
-            
+                echo "<tr><td><strong>Total</strong></td><td>{$totalPrice}</td></tr>";
+                echo "</table>";
+                } else {
+                echo "<p>Your cart is empty.</p>";
+                }
             ?>
+        </div>
+        <div class="title">
+            <h2>Address</h2>
+        </div>
+        <div class="address-form">
+            <form action="includes/process_order.inc.php" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
 
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required>
+
+                <label for="zip">Zip code:</label>
+                <input type="text" id="zip" name="zip" required>
+
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="specifics">Product specifications:</label>
+                <textarea id="specifics" name="specifics"></textarea>
+                
+                <label for="notes">Delivery instructions:</label>
+                <textarea id="notes" name="notes"></textarea>
+
+                <input type="submit" value="Place order">
+            </form>
         </div>
 
+        
         <?php
-        include 'footer.php';
+            include 'footer.php';
         ?>
     </div>
-
-
+    
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
-</html>

@@ -1,5 +1,6 @@
 <?php
 include 'header.php';
+session_start();
 ?>
 <body>
 
@@ -50,26 +51,6 @@ include 'header.php';
                     ?>
 
                 </li>
-                <li class="dropdown">
-                    <?php
-                    $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
-                    $cartCount = count($cart);
-
-                    // check if user is logged in
-                    if(isset($_SESSION['username'])) {
-                        echo '<button class="dropbtn" onclick="loginPage(\'cart.php\')">cart</button>';
-                        echo '<div class="dropdown-content">';
-                        echo '<a href="cart.php">
-                        <i class="fa fa-shopping-cart"></i>
-                        <span class="cart-count"><?php echo $cartCount; ?></span>
-                        </a>';
-                        echo '</div>';
-                    }
-                    
-                    ?>
-                    
-                  
-                </li>
                 
                 <li class="dropdown">
                     <button class="dropbtn">Help</button>
@@ -95,56 +76,37 @@ include 'header.php';
                     </div>
                     </form>
             </div>
-        </nav>
-
-        
+        </nav> 
     </header>
     <div class="container">
-        <div class="search-area">
-            <?php
-            
-
-            // Check if there are search results to display
-           if (isset($_GET['results'])) {
-
-            // Decode the search results from the query string parameter
-            $searchResults = json_decode($_GET['results'], true);
-
-            // Display the search results
-            if (count($searchResults) > 0) {
-                echo "<div class='cards-container'>";
-                foreach ($searchResults as $result) {
-                    echo "<div class='card'>";
-                    $filename = basename($result['item_image']);
-                    echo "<button><img class='card-img' src='images/uploadedImages/$filename' alt='defaultImage'></button>";
-                    echo "<div class='card-body'>";
-                    echo "<h5 class='card-title'>{$result['item_name']}</h5>";
-                    echo "<p class='card-price'>Ksh:{$result['item_price']}</p>";
-            
-                    //when we press the add to cart button
-                    echo "<button class='add-to-cart-btn' data-item-id='{$result['item_id']}' data-item-name='{$result['item_name']}' data-item-price='{$result['item_price']}'
-                     onclick='addToCart({$result['item_id']}, \"{$result['item_name']}\", {$result['item_price']})'>Add to cart</button>";
-                    echo "</div>"; // card-body
-                    echo "</div>"; // card
-                }
-                echo "</div>"; // cards-container
-            } else {
-                echo "<p class='no-results'>No results found.</p>";
-            }
-        }
-
-            
-            ?>
-
+        <div class="title">
+            <h2>Payment</h2>
         </div>
-
+        <div class="payment-card">
+            
+            <form action="includes/process_payment.inc.php" method="post">
+                <h3>Payment Details</h3><br><br>
+                <div class="form-group">
+                <label for="card_number">Card Number</label>
+                <input type="text" id="card_number" name="card_number" required>
+                </div>
+                <div class="form-group">
+                <label for="card_expiry">Card Expiry</label>
+                <input type="date" id="card_expiry" name="card_expiry" required>
+                </div>
+                <div class="form-group">
+                <label for="card_cvc">Card CVC</label>
+                <input type="text" id="card_cvc" name="card_cvc" required>
+                </div>
+                <button type="submit">Submit Payment</button>
+            </form>
+        </div>
+        
         <?php
-        include 'footer.php';
+            include 'footer.php';
         ?>
     </div>
-
-
+    
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
-</html>

@@ -223,7 +223,7 @@ function submitItems($conn){
     // Handle file upload
     if ($_FILES['item_image']['error'] === UPLOAD_ERR_OK) {
         $temp_file = $_FILES['item_image']['tmp_name'];
-        $target_dir = 'images/uploadedImages/';
+        $target_dir = '../images/uploadedImages/';
         $target_file = $target_dir . basename($_FILES['item_image']['name']);
 
         if (move_uploaded_file($temp_file, $target_file)) {
@@ -238,11 +238,12 @@ function submitItems($conn){
 
             if ($conn->query($sql) === TRUE) {
                 // Data was inserted successfully
-                header('Location: ../sellpage.php?error=uploaded');
+                header('Location: ../sellpage.php?error=none');
                 //echo $user_id;
             } else {
                 // Error inserting data
                 error_reporting();
+                header('Location: ../sellpage.php?error=notuploaded');
             }
         } else {
             error_reporting();
@@ -257,7 +258,7 @@ function getProducts($conn){
 
     session_start();
     // Retrieve products for current user from database
-    $user_id = $_SESSION['userid']; // Replace with your session variable name
+    $user_id = $_SESSION['username']; // Replace with your session variable name
     $sql = "SELECT * FROM items WHERE user_id = '$user_id'";
     $result = mysqli_query($conn, $sql);
 
@@ -275,7 +276,7 @@ function getProducts($conn){
 function searchProducts($conn, $searchTerm){
 
     // Perform the search query here
-    $query = "SELECT item_name, item_price, item_image FROM items WHERE item_name LIKE '%$searchTerm%'";
+    $query = "SELECT id, item_name, item_price, item_image FROM items WHERE item_name LIKE '%$searchTerm%'";
     $result = mysqli_query($conn, $query);
 
     // Create an array to hold the search results
@@ -285,6 +286,7 @@ function searchProducts($conn, $searchTerm){
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             $searchResults[] = array(
+                'item_id' => $row['id'],
                 'item_image' => $row['item_image'],
                 'item_name' => $row['item_name'],
                 'item_price' => $row['item_price']
@@ -296,3 +298,179 @@ function searchProducts($conn, $searchTerm){
     return $searchResults;
 }
 
+function getRandomProducts($conn){
+    // Perform the search query here
+    $sql = "SELECT * FROM items ORDER BY RAND() LIMIT 8";
+    $result = $conn->query($sql);
+
+    // Create an array to hold the search results
+    $randomResults = array();
+
+    // Loop through the search results and add them to the array
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $randomResults[] = array(
+                'item_id' => $row['id'],
+                'item_image' => $row['item_image'],
+                'item_name' => $row['item_name'],
+                'item_price' => $row['item_price']
+            );
+        }
+    }
+
+    // Return the search results array
+    return $randomResults;
+}
+
+function getRandomBakers($conn){
+    // Perform the search query here
+    $sql = "SELECT * FROM users ORDER BY RAND() LIMIT 8";
+    $result = $conn->query($sql);
+
+    // Create an array to hold the search results
+    $randomProfiles = array();
+
+    // Loop through the search results and add them to the array
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $randomProfiles[] = array(
+                'user_id' => $row['userId'],
+                'user_image' => $row['user_image'],
+                'user_name' => $row['usersName'],
+            );
+        }
+    }
+
+    // Return the search results array
+    return $randomProfiles;
+}
+
+function removeItem(){
+    if (isset($_GET['itemId'])) {
+        $itemId = $_GET['itemId'];
+        
+        if (isset($_SESSION['cart_items'])) {
+            foreach ($_SESSION['cart_items'] as $key => $item) {
+                if ($item['id'] == $itemId) {
+                    unset($_SESSION['cart_items'][$key]);
+                    break;
+                }
+            }
+        }
+        var_dump($_SESSION['cart_items']);
+
+        // Redirect back to the cart page
+        header('Location: ../cart.php');
+        exit();
+    } else {
+        // Return an error message
+        echo 'Error: Item ID not provided';
+    }
+}
+function removeAllItems(){
+    unset($_SESSION['cart_items']);
+    var_dump($_SESSION['cart_items']);
+    header('Location: ../cart.php'); 
+    exit();  
+}
+
+function processItems($conn){
+    
+    // Check if the form has been submitted
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Get the form data
+        $name = $_POST['name'];
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $state = $_POST['state'];
+        $zip = $_POST['zip'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        $notes = $_POST['notes'];
+        $specifics = $_POST['specifics'];
+        $user_id = $_SESSION['username']; // Replace with your session variable name
+        // Do something with the data (e.g. insert into database)
+        // ...
+         // Insert the order details into the database
+        $sql = "INSERT INTO orders (item_name, user_id, delivery_address, city, county, zip, phone, email, product_specs, delivery_instructions)
+        VALUES ('$name','$user_id', '$address', '$city', '$state', '$zip', '$phone', '$email', '$specifics','$notes')";
+
+        if ($conn->query($sql) === TRUE) {
+        echo "Order added successfully";
+        } else {
+        echo "Error adding order: " . $conn->error;
+        }
+
+        // Close the database connection
+        $conn->close();
+        header('Location: ../payment.php'); 
+    }
+}
+
+function addPaymentDetails($conn){
+    // Check if the form has been submitted
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Get the form data
+        $card_number = $_POST['card_number'];
+        $card_expiry = $_POST['card_expiry'];
+        $card_cvc = $_POST['card_cvc'];
+        $user_id = $_SESSION['username']; // Replace with your session variable name
+
+        // Check if the user already has an order in the database
+        $result = $conn->query("SELECT * FROM orders WHERE user_id='$user_id'");
+        if ($result->num_rows > 0) {
+            // User has an existing order, update the row with the payment details
+            $sql = "UPDATE orders SET card_number='$card_number', card_expiry='$card_expiry', card_cvc='$card_cvc' WHERE user_id='$user_id'";
+            if ($conn->query($sql) === TRUE) {
+                echo "Order updated successfully";
+            } else {
+                echo "Error updating order: " . $conn->error;
+            }
+        } else {
+            // User does not have an existing order, insert a new row with the payment details
+            $sql = "INSERT INTO orders (user_id, card_number, card_expiry, card_cvc) VALUES ('$user_id', '$card_number', '$card_expiry', '$card_cvc')";
+            if ($conn->query($sql) === TRUE) {
+                echo "Order added successfully";
+            } else {
+                echo "Error adding order: " . $conn->error;
+            }
+        }
+
+        // Send the email notification
+        sendEmail($conn);
+
+        // Close the database connection
+        $conn->close();
+
+        // Redirect to the payment confirmation page
+        header('Location: ../confirmation.php'); 
+    }
+}
+
+function sendEmail($conn){
+    // Retrieve the user's email address from the payment details form
+    $user_email = $_POST['email'];
+
+    // Retrieve the baker's email address from the database
+    $baker_email = "baker@example.com";
+
+    // Construct the email message body
+    $message = "Dear customer,\n\nYour order has been processed and is on the way.\n\nThank you for choosing us.\n\nBest regards,\nThe Cake Shop Team";
+
+    // Set the email subject
+    $subject = "Your Cake Order";
+
+    // Set the email headers
+    $headers = "From: The Cake Shop <noreply@cakeshop.com>\r\n";
+    $headers .= "Reply-To: noreply@cakeshop.com\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+
+    var_dump($user_email);
+    var_dump($baker_email);
+    // Send the email to the user
+    mail($user_email, $subject, $message, $headers);
+    
+    // Send the email to the baker
+    mail($baker_email, $subject, $message, $headers);
+}

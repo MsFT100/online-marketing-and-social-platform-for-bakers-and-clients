@@ -1,6 +1,5 @@
 <?php
 include_once 'header.php';
-
 ?>
 <body>
     <header class="background">
@@ -32,6 +31,7 @@ include_once 'header.php';
                     </div>
                 </li>
                 <li><span class="vertical-line"></span><li>
+               
                 <li class="dropdown">
                     <?php
                         // check if user is logged in
@@ -41,6 +41,27 @@ include_once 'header.php';
                     ?>
 
                 </li>
+                <li class="dropdown">
+                    <?php
+                    $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
+                    $cartCount = count($cart);
+
+                    // check if user is logged in
+                    if(isset($_SESSION['username'])) {
+                        echo '<button class="dropbtn" onclick="loginPage(\'cart.php\')">cart</button>';
+                        echo '<div class="dropdown-content">';
+                        echo '<a href="cart.php">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="cart-count"><?php echo $cartCount; ?></span>
+                        </a>';
+                        echo '</div>';
+                    }
+                    
+                    ?>
+                    
+                  
+                </li>
+                
                 <li class="dropdown">
                     <button class="dropbtn">Help</button>
                     <div class="dropdown-content">
@@ -70,101 +91,169 @@ include_once 'header.php';
         
     </header>
     <div class="container">
-
-        <div class="title">
-            <h2>Top Bakers</h2>
-        </div>
-
-        
-
-        <div class="profiles">
-    
-            <div class="cardProfile">
-                <button>
-                <img src="images/profilepics/image1.jpg" class="pr-img">
-                    
-                </button>
-            </div>
-            <div class="cardProfile">
-                <button>
-                <img src="images/profilepics/image2.jpg"class="pr-img">
-                </button>
-            </div>
-            <div class="cardProfile">
-                <button>
-                <img src="images/profilepics/image3.jpg"class="pr-img">
-                </button>
-            </div>
-            <div class="cardProfile">
-                <button>
-                <img src="images/profilepics/image1.jpg" class="pr-img">
-                    
-                </button>
-            </div>
-            <div class="cardProfile">
-                <button>
-                <img src="images/profilepics/image2.jpg"class="pr-img">
-                </button>
-            </div>
-            <div class="cardProfile">
-                <button>
-                <img src="images/profilepics/image3.jpg"class="pr-img">
-                </button>
-            </div>
-
-        </div>
         <div class="title">
             <h2>Our products</h2>
         </div>
         <div class="products">
             <ul>
                 <li class="item">
-                    <button>
-                        <img src="images/icons/cake.jpg" alt="cake">
+                    <button onclick="goToCategory('cake')">
+                        <img src="images/icons/Fresh cakes.jpg" alt="cake">
                     </button>
+                    <h3>Cake</h3>
                 </li>
                 
                 <li class="item">
-                    <button>
-                        <img src="images/icons/pie.jpg" alt="cake">
+                    <button onclick="goToCategory('Financiers')">
+                        <img src="images/icons/Financiers.jpg" alt="cake">
                     </button>
+                    <h3>Financiers</h3>
                 </li>
                 <li class="item">
-                    <button>
+                    <button onclick="goToCategory('Scones')">
                         <img src="images/icons/scones.jpg" alt="cake">
                     </button>
+                    <h3>Scones</h3>
                 </li>
                 <li class="item">
-                    <button>
+                    <button onclick="goToCategory('Cookies')">
                         <img src="images/icons/cookies.jpg" alt="cake">
                     </button>
+                    <h3>Cookies</h3>
                 </li>
                 <li class="item">
-                    <button>
+                    <button onclick="goToCategory('Muffins')">
                         <img src="images/icons/muffins.jpg" alt="cake">
                     </button>
+                    <h3>Muffins</h3>
                 </li>
 
                 <li class="item">
-                    <button>
+                    <button onclick="goToCategory('Bread Rolls')">
                         <img src="images/icons/bread-rolls.jpg" alt="cake">
                     </button>
+                    <h3>Bread Rolls</h3>
                 </li>
                 <li class="item">
-                    <button>
+                    <button onclick="goToCategory('Pizza')">
                         <img src="images/icons/pizza.jpg" alt="cake">
                     </button>
+                    <h3>Pizza</h3>
                 </li>
                 <li class="item">
-                    <button>
+                    <button onclick="goToCategory('Maandazi')">
                         <img src="images/icons/mandazi.jpg" alt="cake">
                     </button>
+                    <h3>Maandazi</h3>
                 </li>
-                
+                <li class="item">
+                    <button onclick="goToCategory('Bread Rolls')">
+                        <img src="images/icons/bread-rolls.jpg" alt="cake">
+                    </button>
+                    <h3>Bread Rolls</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Burger Buns')">
+                        <img src="images/icons/BurgerBuns.jpg" alt="cake">
+                    </button>
+                    <h3>Pizza</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Special cakes')">
+                        <img src="images/icons/Special cakes.jpg" alt="cake">
+                    </button>
+                    <h3>Special cakes</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Tarts')">
+                        <img src="images/icons/Tarts.jpg" alt="cake">
+                    </button>
+                    <h3>Tarts</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Macaron')">
+                        <img src="images/icons/Macaron.jpg" alt="cake">
+                    </button>
+                    <h3>Macaron</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Baquette')">
+                        <img src="images/icons/mandazi.jpg" alt="cake">
+                    </button>
+                    <h3>Baquette</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Muffins')">
+                        <img src="images/icons/muffins.jpg" alt="cake">
+                    </button>
+                    <h3>Muffins</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Vienna')">
+                        <img src="images/icons/Vienna.jpg" alt="cake">
+                    </button>
+                    <h3>Vienna</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Ciabatta')">
+                        <img src="images/icons/Ciabatta.jpg" alt="cake">
+                    </button>
+                    <h3>Ciabatta</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Scones')">
+                        <img src="images/icons/mandazi.jpg" alt="cake">
+                    </button>
+                    <h3>Maandazi</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Submarine')">
+                        <img src="images/icons/submarine.jpg" alt="cake">
+                    </button>
+                    <h3>Submarine</h3>
+                </li>
+                <li class="item">
+                    <button onclick="goToCategory('Viennosiere')">
+                        <img src="images/icons/viennoiserie.jpg" alt="cake">
+                    </button>
+                    <h3>Viennosiere</h3>
+                </li>
 
             </ul>
         </div>
+        <div class="title">
+            <h2>Shop</h2>
+        </div>
+        <div class="products"> 
+            <?php
+                
+                $randomResults = include 'includes/randomproducts.inc.php';
+                // Display the search results
+                if (count($randomResults) > 0) {
+                    echo "<div class='cards-container'>";
+                    foreach ($randomResults as $result) {
+                        echo "<div class='card'>";
+                        $filename = basename($result['item_image']);
+                        echo "<img class='card-img' src='images/uploadedImages/$filename' alt='defaultImage'>";
+                        echo "<div class='card-body'>";
+                        echo "<h5 class='card-title'>{$result['item_name']}</h5>";
+                        echo "<p class='card-price'>Ksh:{$result['item_price']}</p>";
+                        //when we press the add to cart button
+                        echo "<button class='add-to-cart-btn' data-item-id='{$result['item_id']}' data-item-name='{$result['item_name']}' data-item-price='{$result['item_price']}'
+                        onclick='addToCart({$result['item_id']}, \"{$result['item_name']}\", {$result['item_price']})'>Add to cart</button>";
+                        echo "</div>"; // card-body
+                        echo "</div>"; // card
+                    }
+                    echo "</div>"; // cards-container
+                } else {
+                    echo "<p class='no-results'>No results found.</p>";
+                }
+            
+                
+            ?>
 
+            
+        </div>
         <?php
     
         include 'footer.php';

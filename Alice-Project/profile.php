@@ -120,29 +120,34 @@ include 'header.php';
                 <div class="prof-item" id="Products">
 
                     <script>
-                    // Call get_products.php script using AJAX
+                    
                     var xhr = new XMLHttpRequest();
                     xhr.open('GET', 'includes/getProducts.inc.php');
                     xhr.onload = function() {
                         if (xhr.status === 200) {
-                        // Parse response as JSON and generate product cards
-                        var products = JSON.parse(xhr.responseText);
-                        var container = document.getElementById('Products');
-                        products.forEach(function(product) {
-                            var card = document.createElement('div');
-                            card.className = 'prof-item-about';
-                            card.innerHTML = `
-                            <img src="${product.item_image}" alt="Product Image">
-                            <h3>${product.item_type}</h3>
-                            <p class="price">$${product.item_price}</p>
-                            <button>remove</button>
-                            `;
-                            container.appendChild(card);
-                        });
+                            // Parse response as JSON and generate product cards
+                            var products = JSON.parse(xhr.responseText);
+                            console.log(products); 
+                            var container = document.getElementById('Products');
+                            products.forEach(function(product) {
+                                var card = document.createElement('div');
+                                card.className = 'prof-item-about';
+                                var filename = product.item_image.split('/').pop();
+                                card.innerHTML = `
+                                    <img src="images/uploadedImages/${filename}" alt="Product Image">
+                                    <h3>${product.item_type}</h3>
+                                    <p class="price">$${product.item_price}</p>
+                                    <button onclick="confirmDelete(${product.id})">Remove</button>
+                                `;
+                                console.log(product.id);
+                                container.appendChild(card);
+                            });
                         }
                     };
                     xhr.send();
+
                     </script>
+                    
 
                 </div>
 
