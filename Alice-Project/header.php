@@ -12,5 +12,6 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>online marketing and social platform for bakers and clients</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="javascript/script.js"></script>
 </head>

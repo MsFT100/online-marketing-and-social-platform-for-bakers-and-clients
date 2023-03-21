@@ -324,7 +324,7 @@ function getRandomProducts($conn){
 
 function getRandomBakers($conn){
     // Perform the search query here
-    $sql = "SELECT * FROM users ORDER BY RAND() LIMIT 8";
+    $sql = "SELECT * FROM users ORDER BY RAND() LIMIT 5";
     $result = $conn->query($sql);
 
     // Create an array to hold the search results
@@ -343,6 +343,7 @@ function getRandomBakers($conn){
 
     // Return the search results array
     return $randomProfiles;
+    var_dump($randomProfiles);
 }
 
 function removeItem(){
@@ -400,7 +401,8 @@ function processItems($conn){
         } else {
         echo "Error adding order: " . $conn->error;
         }
-
+        $order_id = mysqli_insert_id($conn);
+        $_SESSION['order_id'] = $order_id;
         // Close the database connection
         $conn->close();
         header('Location: ../payment.php'); 
@@ -448,29 +450,76 @@ function addPaymentDetails($conn){
 }
 
 function sendEmail($conn){
-    // Retrieve the user's email address from the payment details form
-    $user_email = $_POST['email'];
+    $order_id = $_SESSION['order_id'];
+    //var_dump($order_id);
+// Retrieve the buyer's email from the database
+    $sql = "SELECT email FROM orders WHERE id = $order_id";
+    $result = $conn->query($sql);
+    //$row = $result->fetch_assoc();
+        //var_dump($row['email']);
+    // Check if the query returned any rows
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        
+        $buyer_email = $row['email'];
+        // Use $buyer_email in your email function to send an email to the buyer
+         // Set the email subject
+          // Construct the email message body
+        $message = "Dear customer,\n\nYour order has been processed and is on the way.\n\nThank you for choosing us.\n\nBest regards,\nThe Cake Shop Team";
 
-    // Retrieve the baker's email address from the database
-    $baker_email = "baker@example.com";
+        $subject = "Your Cake Order";
 
-    // Construct the email message body
-    $message = "Dear customer,\n\nYour order has been processed and is on the way.\n\nThank you for choosing us.\n\nBest regards,\nThe Cake Shop Team";
+        // Set the email headers
+        $headers = "From: lennoxmathewwork@gmail.com\r\n";
+        $headers .= "Reply-To: lennoxmathewwork@gmail.com\r\n";
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-    // Set the email subject
-    $subject = "Your Cake Order";
-
-    // Set the email headers
-    $headers = "From: The Cake Shop <noreply@cakeshop.com>\r\n";
-    $headers .= "Reply-To: noreply@cakeshop.com\r\n";
-    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-
-
-    var_dump($user_email);
-    var_dump($baker_email);
-    // Send the email to the user
-    mail($user_email, $subject, $message, $headers);
+        // Send the email to the buyer
+        mail($buyer_email, $subject, $message, $headers);
+    }
     
-    // Send the email to the baker
-    mail($baker_email, $subject, $message, $headers);
+   
+   
+    
+}
+
+function sendTo($name, $sender_email, $recipient_email, $message) {
+    $subject = "New message from $name";
+    $headers = "From: $name <$sender_email>\r\n";
+    $headers .= "Reply-To: $sender_email\r\n";
+    $headers .= "Content-type: text/plain; charset=UTF-8\r\n";
+
+    $mail_result = mail($recipient_email, $subject, $message, $headers);
+
+    if ($mail_result) {
+        echo "Email sent successfully.";
+    } else {
+        echo "Failed to send email.";
+    }
+    header("location: ../chat.php?id=5");
+}
+
+function getItem($conn, $id){
+    // Perform the search query here
+    $sql = "SELECT * FROM items WHERE id = $id";
+    $result = $conn->query($sql);
+
+    // Create an array to hold the search results
+    $items = array();
+
+    // Loop through the search results and add them to the array
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $items[] = array(
+                'item_id' => $row['id'],
+                'item_image' => $row['item_image'],
+                'item_description' => $row['item_description'],
+                'item_price' => $row['item_price'],
+                'item_name' => $row['item_name'],
+            );
+        }
+    }
+    // Return the search results array
+    return $items;
+    
 }

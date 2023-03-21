@@ -83,6 +83,11 @@ session_start();
 
         <div class="wrapper">
             <div class="title">
+                <?php
+                include 'includes/dbhlogin.inc.php';
+                include 'includes/functions.inc.php';
+                sendEmail($conn);
+                ?>
                     <h2>Payment recieved</h2>
                     <div class="checkmark">
                     <ion-icon name="checkmark-outline"></ion-icon>

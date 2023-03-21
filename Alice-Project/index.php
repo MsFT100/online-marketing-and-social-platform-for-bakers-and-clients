@@ -42,6 +42,15 @@ include_once 'header.php';
 
                 </li>
                 <li class="dropdown">
+                        <?php
+                            // check if user is logged in
+                            if(isset($_SESSION['username'])) {
+                                echo '<button class="dropbtn" onclick="loginPage(\'chat.php\')">Chat</button>';
+                            }
+                        ?>
+
+                    </li>
+                <li class="dropdown">
                     <?php
                     $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
                     $cartCount = count($cart);
@@ -91,6 +100,35 @@ include_once 'header.php';
         
     </header>
     <div class="container">
+    <div class="title">
+            <h2>profiles</h2>
+        </div>
+        <div class="profiles">
+            <?php
+            include 'includes/dbhlogin.inc.php';
+            include 'includes/functions.inc.php';
+            $profiles = getRandomBakers($conn);
+            //var_dump($profiles);
+                // Display the search results
+                if (count($profiles) > 0) {
+                    echo "<div class='cards-container'>";
+                    foreach ($profiles as $result) {
+                        echo "<div class='card-prof'>";
+                        $filename = basename($result['user_image']);
+                        echo "<img class='prof-img' src='images/profilepics/$filename' onclick='sendToProductPage(\"chat.php\", \"{$result['user_id']}\")' alt='defaultImage'>";
+                        echo "<div class='card-body'>";
+                        echo "<h5 class='card-title'>{$result['user_name']}</h5>";
+                        echo "<button onclick='sendToProductPage(\"chat.php\", \"{$result['user_id']}\")' >Write to</button>";
+                        
+                        echo "</div>"; // card-body
+                        echo "</div>"; // card
+                    }
+                    echo "</div>"; // cards-container
+                } else {
+                    echo "<p class='no-results'>No results found.</p>";
+                }
+            ?>
+        </div>
         <div class="title">
             <h2>Our products</h2>
         </div>
@@ -234,7 +272,7 @@ include_once 'header.php';
                     foreach ($randomResults as $result) {
                         echo "<div class='card'>";
                         $filename = basename($result['item_image']);
-                        echo "<img class='card-img' src='images/uploadedImages/$filename' alt='defaultImage'>";
+                        echo "<img class='card-img' src='images/uploadedImages/$filename' onclick='sendToProductPage(\"productPage.php\", \"{$result['item_id']}\")' alt='defaultImage'>";
                         echo "<div class='card-body'>";
                         echo "<h5 class='card-title'>{$result['item_name']}</h5>";
                         echo "<p class='card-price'>Ksh:{$result['item_price']}</p>";

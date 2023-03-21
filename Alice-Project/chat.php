@@ -79,48 +79,35 @@ session_start();
         </nav> 
     </header>
     <div class="container">
-        <div class="title">
-            <h2>Payment</h2>
-        </div>
-        <div class="payment-method">
-            <div>
-                <label>Choose a payment Method: </label>
-            <br><br>
-            </div>
-            <br><br>
-            <div>
-                <button onclick="changePayment('mpesa')">Mpesa</button>
-                <button onclick="changePayment('card')">Card</button>
-            </div>
-        </div>
-        <div class="payment-card" id="mpesa" style="display: none;">
-            <form action="includes/process_payment.inc.php" method="post">
-                <h3>Mpesa Payment Details</h3><br><br>
-                <div class="form-group">
-                <label for="phone_number">phone Number</label>
-                <input type="text" id="phone_number" name="phone_number" required>
-                </div>
-                <button type="submit">Submit Payment</button>
-            </form>
-        </div>
-        <div class="payment-card" id="card" style="display: none;">
-            <form action="includes/process_payment.inc.php" method="post">
-                <h3>Payment Details</h3><br><br>
-                <div class="form-group">
-                <label for="card_number">Card Number</label>
-                <input type="text" id="card_number" name="card_number" required>
-                </div>
-                <div class="form-group">
-                <label for="card_expiry">Card Expiry</label>
-                <input type="date" id="card_expiry" name="card_expiry" required>
-                </div>
-                <div class="form-group">
-                <label for="card_cvc">Card CVC</label>
-                <input type="text" id="card_cvc" name="card_cvc" required>
-                </div>
-                <button type="submit">Submit Payment</button>
-            </form>
-        </div>
+        
+        <form id="chat-form" action="includes/sendmail.inc.php" method="POST" class="email-form">
+            <label>Your name</label>
+            <input type="text"  name="name" placeholder="Your name" required>
+            <label>Your Email</label>
+            <input type="email" name="sender" placeholder="Your Email" required>
+            <label>Recipient Email</label>
+            <?php
+            include 'includes/dbhlogin.inc.php';
+            // Retrieve the id parameter from the URL query string
+            if (isset($_GET['id'])) {
+                $recipient_id = $_GET['id'];
+                } else {
+                // Handle error if id parameter is not set
+                
+            }
+            $sql = "SELECT usersEmail FROM users WHERE userId = $recipient_id";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            $recipient_email = $row['usersEmail'];
+            echo "<input type='email' name='recipient' placeholder='Recipient's name' value='$recipient_email' required>";    
+            
+            ?>
+            <label>message</label>
+            <textarea name="message" placeholder="Type your message here" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+
+
         
         <?php
             include 'footer.php';

@@ -116,7 +116,7 @@ include 'header.php';
                 foreach ($searchResults as $result) {
                     echo "<div class='card'>";
                     $filename = basename($result['item_image']);
-                    echo "<button><img class='card-img' src='images/uploadedImages/$filename' alt='defaultImage'></button>";
+                    echo "<button><img class='card-img' src='images/uploadedImages/$filename' onclick='sendToProductPage(\"productPage.php\", \"{$result['item_id']}\")' alt='defaultImage'></button>";
                     echo "<div class='card-body'>";
                     echo "<h5 class='card-title'>{$result['item_name']}</h5>";
                     echo "<p class='card-price'>Ksh:{$result['item_price']}</p>";

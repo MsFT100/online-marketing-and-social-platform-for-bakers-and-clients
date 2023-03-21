@@ -35,6 +35,15 @@ include 'header.php';
 
                 </li>
                 <li class="dropdown">
+                        <?php
+                            // check if user is logged in
+                            if(isset($_SESSION['username'])) {
+                                echo '<button class="dropbtn" onclick="loginPage(\'chat.php\')">Chat</button>';
+                            }
+                        ?>
+
+                    </li>
+                <li class="dropdown">
                     <button class="dropbtn">Shop</button>
                     <div class="dropdown-content">
                         <a href="index.php">Shop</a>
@@ -112,10 +121,7 @@ include 'header.php';
                     </div>
                     
                 </div>
-                <div class="prof-item" id="About">
-                    
-                    
-                </div>
+                
                 
                 <div class="prof-item" id="Products">
 
@@ -131,7 +137,7 @@ include 'header.php';
                             var container = document.getElementById('Products');
                             products.forEach(function(product) {
                                 var card = document.createElement('div');
-                                card.className = 'prof-item-about';
+                                card.className = 'prof-item-product';
                                 var filename = product.item_image.split('/').pop();
                                 card.innerHTML = `
                                     <img src="images/uploadedImages/${filename}" alt="Product Image">

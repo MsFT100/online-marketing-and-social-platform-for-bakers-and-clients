@@ -51,7 +51,15 @@ session_start();
                         ?>
 
                     </li>
-                    
+                    <li class="dropdown">
+                        <?php
+                            // check if user is logged in
+                            if(isset($_SESSION['username'])) {
+                                echo '<button class="dropbtn" onclick="loginPage(\'chat.php\')">Chat</button>';
+                            }
+                        ?>
+
+                    </li>
                     <li class="dropdown">
                         <button class="dropbtn">Help</button>
                         <div class="dropdown-content">
@@ -92,7 +100,7 @@ session_start();
                         // Loop through the cart items and display them in a table
                         if (!empty($cartItems)) {
                         echo "<table>";
-                        echo "<tr><th>Item Name</th><th>Price</th></tr>";
+                        echo "<tr><th>Item Name</th><th>Price</th><th></th></tr>";
                         foreach ($cartItems as $item) {
                             $itemId = $item['id'];
                             $itemName = $item['name'];
@@ -108,15 +116,15 @@ session_start();
                             //echo "<td><button onclick=\"removeItem('{$item['id']}')\">Remove</button></td>";
                             echo "</tr>";
                         }
-                        echo "<tr><td><strong>Total</strong></td><td>{$totalPrice}</td></tr>";
+                        echo "<tr><td><strong>Total</strong></td><td>{$totalPrice}</td><td></td></tr>";
                         echo "</table>";
                         } else {
                         echo "<p>Your cart is empty.</p>";
                         }
                     ?>
 
-                     <button onclick="loginPage('checkout.php')">Checkout</button>
-                     <button onclick="removeAllItems()">Remove All</button>
+                     <button class="btn-b" onclick="loginPage('checkout.php')">Checkout</button>
+                     <button class="btn-b" onclick="removeAllItems()">Remove All</button>
 
 
 

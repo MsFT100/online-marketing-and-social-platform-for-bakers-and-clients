@@ -91,12 +91,28 @@ function changeContent(contentID) {
     
     
   }
+function changePayment(contentID){
+  console.log("working");
+  // Hide all content elements
+  var contentElements = document.getElementsByClassName("payment-card");
+  for (var i = 0; i < contentElements.length; i++) {
+    contentElements[i].style.display = "none";
+  }
 
+  // Show the selected content element
+  var selectedContent = document.getElementById(contentID);
+  selectedContent.style.display = "block";
+
+}
   //linking pages
 function loginPage(url){
     console.log("working..");
     window.location.href = "../Alice-Project/" + url;
     
+}
+function sendToProductPage(url, id){
+  window.location.href = "../Alice-Project/" + url + "?id=" + id;
+  
 }
 function goToCategory(category){
   console.log("working..");
@@ -111,7 +127,6 @@ function addToCart(item_id, item_name, item_price) {
     const itemId = item_id;
     const itemName = item_name;
     const itemPrice = item_price;
-    console.log(itemId, itemName, itemPrice);
     // Send an AJAX request to add the item to the cart
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'includes/cart.inc.php');
@@ -159,6 +174,44 @@ function confirmDelete(itemId) {
     xhr.send('itemId=' + encodeURIComponent(itemId));
   }
 }
+
+/*chatting
+$('#chat-form').submit(function(event) {
+  event.preventDefault(); // Prevent the form from submitting normally
+
+  // Get the form data
+  var sender = $('#sender').val();
+  var recipient = $('#recipient').val();
+  var message = $('#message').val();
+
+  // Send the message data to the PHP script via AJAX
+  $.ajax({
+    url: 'includes/send_message.inc.php',
+    type: 'POST',
+    data: { sender: sender, recipient: recipient, message: message },
+    success: function(response) {
+      // Clear the message input field
+      $('#message').val('');
+    }
+  });
+  alert("sending");
+});
+setInterval(function() {
+  // Get the recipient's name
+  var recipient = $('#recipient').val();
+
+  // Send an AJAX request to the PHP script to get new messages
+  $.ajax({
+    url: 'includes/get_messages.inc.php',
+    type: 'POST',
+    data: { recipient: recipient },
+    success: function(response) {
+      // Display the new messages
+      $('#chatbox').append(response);
+    }
+  });
+}, 1000); // Check for new messages every 1 second
+*/
 
 
 

@@ -19,8 +19,8 @@ body{
     justify-content: space-between;
 }
 .logo{
-    width: 60px;
-    height: 60px;
+    width: 200px;
+    height: 50px;
     margin-right: px;
 }
 .navbar{
@@ -371,15 +371,46 @@ body{
 .profiles{
   background-color: white;
   width: 100%;
-  height: 150px;
+  height: 300px;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 10px 10px;
   justify-content: space-between;
+  overflow: auto;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
-
+.profiles .card-prof{
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+/*indexprof*/
+.card-prof{
+  background-color: #ddd;
+  border-radius: 2px;
+}
+.profiles .card-prof img{
+  width: 50%;
+  height: 50%;
+  border-radius: 100px;
+}
+.profiles .card-prof button{
+  width: 100%;
+  height: 30px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  background-color: #00b53f;
+}
+.profiles .card-prof button:hover{
+  background-color: #3e8e41;
+}
 .cardProfile{
   width: 100px;
   height: 100px;
@@ -659,16 +690,42 @@ footer {
   height: 100px;
   border-radius: 60px;
 }
+.prof-item-product{
+  width: 30%;
+  height: 300px;
+  background-color: #ddd;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.prof-item-product img{
+  width: 100%;
+  height: 150px;
+}
+.prof-item-product button{
+  width: 100%;
+  height: 45px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.prof-item-product button:hover{
+  background-color: #ccc;
+}
 .prof-item-about{
   width: 100%;
-  height: max-content;
+  height: 100%;
   margin-top: 20px;
   position:relative;
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   padding: 10px 10px;
   
+}
+.prof-item-about img{
+  width: 200px;
+  height: 70px;
 }
 /*update profile form*/
 .prof-item-about form{
@@ -750,8 +807,11 @@ footer {
 }
 .prof-item{
   width: 100%;
-  height: max-content;
-  margin-top: 20px;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   text-align: center;
   padding: 10px 10px;
@@ -767,6 +827,7 @@ footer {
   text-align: normal;
   padding: 10px 10px;
 }
+
 
 /*cards*/
 .card {
@@ -812,20 +873,47 @@ footer {
 .search-area .checkout-table{
   height: 100%;
   width: 100%;
-  background-color: #2e2e2e;
-
+  background-color: #334;
 }
 .search-area .checkout-table table{
   height: max-content;
   width: 100%;
-  background-color: #ddd;
   align-items: center;
+  border-color: #0077b5;
+}
+.search-area .checkout-table table th{
+  height: 70px;
+  text-decoration: underline;
+  font-size: 25px;
+}
+.search-area .checkout-table table tr{
+  height: 35px;
+  background-color: #ddd;
 }
 .search-area .checkout-table table td{
   font-size: 18px;
   text-align: center;
 }
-
+.search-area .checkout-table table td button{
+  width: 100px;
+  height: 35px;
+  border: none;
+  background-color: #00b53f;
+}
+.search-area .checkout-table table td button:hover{
+  background-color: #3e8e41;
+}
+.btn-b{
+  width: 100px;
+  height: 45px;
+  border: none;
+  margin-left: 35px;
+  margin-top: 45px;
+  background-color: #00b53f;
+}
+.btn-b:hover{
+background-color: #3e8e41;
+}
 /*shopping list*/
 .shoppinglist {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
@@ -864,13 +952,26 @@ footer {
   height: max-content;
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  padding: 10px 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.payment-method {
+  height: max-content;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   
   padding: 10px 10px;
   border-radius: 5px;
   margin-bottom: 20px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.payment-method label{
+  font-size: large;
 }
 .payment-card form{
   width: 300px;
@@ -954,6 +1055,23 @@ footer {
 }
 
 .payment-card button:hover {
+  background-color: #3e8e41;
+}
+
+.payment-method button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.payment-method button:hover {
   background-color: #3e8e41;
 }
 
@@ -1063,4 +1181,67 @@ footer {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
+/*product page*/
+.product-image{
+  width: 100%;
+  height: 100%;
+  
+}
+.product-image .products-image{
+  width: 100%;
+}
+.content{
+  width: 100%;
+  height: 100vh;
+  padding: 20px 20px;
+  background-color: #ddd;
+  text-align: center;
+}
+.content h1{
+  text-decoration: underline;
+  font-size: large;
+  font-weight: 400px;
+}
+.content p{
+  font-size: large;
+  margin-top: 10px;
+}
 
+
+.email-form{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ccc;
+
+  overflow: auto;
+
+}
+.email-form label{
+  font-size: 20px;
+  font-weight: 300px;
+}
+.email-form input{
+  width: 400px;
+  height: 50px;
+  border-radius: 2px;
+  border: none;
+}
+
+.email-form textarea{
+  max-width: 600px;
+  max-height: 700px;
+}
+.email-form button{
+  width: 200px;
+  height: 50px;
+  background-color: #00b53f;
+  border: none;
+  border-radius: 2px;
+  font-size: 18px;
+}
+
+.email-form button:hover{
+  background-color: #3e8e41;
+}
