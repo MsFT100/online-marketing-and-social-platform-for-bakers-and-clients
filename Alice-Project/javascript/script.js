@@ -27,14 +27,14 @@ window.onload = function() {
         // Get the ID of the active display
         var activeDisplayId = glbStaffCurrentDisplayID;
         if(activeDisplayId == null){
-            document.getElementById("Location").style.display = "block";
+            document.getElementById("Location").style.display = "flex";
             activeDisplayId = "Location";
             glbStaffCurrentDisplayID = activeDisplayId;
             localStorage.setItem(glbStaffCurrentDisplayID, activeDisplayId);
         }else{
             localStorage.setItem(glbStaffCurrentDisplayID, activeDisplayId);
             activeDisplay = glbStaffCurrentDisplayID;
-            document.getElementById(activeDisplay).style.display = "block";
+            document.getElementById(activeDisplay).style.display = "flex";
         }
 
     } else if (currentDocument == "adminDashboard.php") {
@@ -48,7 +48,7 @@ window.onload = function() {
         var activeDisplayId = glbAdminCurrentDisplayID;
         console.log("log: " + activeDisplayId);
         if(activeDisplayId == null){
-            document.getElementById("dashboard").style.display = "block";
+            document.getElementById("dashboard").style.display = "flex";
             activeDisplayId = "dashboard";
             console.log("Was null now set at: " + activeDisplayId);
             glbAdminCurrentDisplayID = activeDisplayId;
@@ -57,7 +57,7 @@ window.onload = function() {
         }else{
             localStorage.setItem(glbAdminCurrentDisplayID, activeDisplayId);
             activeDisplay = glbAdminCurrentDisplayID;
-            document.getElementById(activeDisplay).style.display = "block";
+            document.getElementById(activeDisplay).style.display = "flex";
             console.log("Reloading and seting id as: " + activeDisplay);
         }
     }
@@ -75,7 +75,7 @@ function changeContent(contentID) {
   
     // Show the selected content element
     var selectedContent = document.getElementById(contentID);
-    selectedContent.style.display = "block";
+    selectedContent.style.display = "flex";
 
     var currentDocument = window.location.pathname.split('/').pop();
 
@@ -121,12 +121,13 @@ function goToCategory(category){
 
 
 // SECTION: adding items to the cart
-function addToCart(item_id, item_name, item_price) {
-    
+function addToCart(item_id, item_name, item_price, item_image) {
     // Retrieve the data attributes from the "Add to cart" button
     const itemId = item_id;
     const itemName = item_name;
     const itemPrice = item_price;
+    const itemImage = item_image;
+  
     // Send an AJAX request to add the item to the cart
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'includes/cart.inc.php');
@@ -135,12 +136,31 @@ function addToCart(item_id, item_name, item_price) {
       // Handle the response from the server
       console.log(xhr.responseText);
     };
-    xhr.send(`itemId=${itemId}&itemName=${itemName}&itemPrice=${itemPrice}`);
+    xhr.send(`itemId=${itemId}&itemName=${itemName}&itemPrice=${itemPrice}&itemImage=${itemImage}`);
     alert("Added to cart");
     
     
   }
-
+//add to cart and go to checkout
+function buyNow(item_id, item_name, item_price, item_image){
+  // Retrieve the data attributes from the "Add to cart" button
+  const itemId = item_id;
+  const itemName = item_name;
+  const itemPrice = item_price;
+  const itemImage = item_image;
+  // Send an AJAX request to add the item to the cart
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'includes/cart.inc.php');
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onload = function() {
+    // Handle the response from the server
+    console.log(xhr.responseText);
+  };
+  xhr.send(`itemId=${itemId}&itemName=${itemName}&itemPrice=${itemPrice}&itemImage=${itemImage}`);
+    
+  alert("Added to cart");
+  window.location.href = "../Alice-Project/checkout.php";
+}
 // Remove item from cart
 function removeItem(itemId) {
   var confirmRemove = confirm('Are you sure you want to remove this item from your cart?');
@@ -175,43 +195,19 @@ function confirmDelete(itemId) {
   }
 }
 
-/*chatting
-$('#chat-form').submit(function(event) {
-  event.preventDefault(); // Prevent the form from submitting normally
+const togglePassword = document.querySelector("#togglePassword");
+        const password = document.querySelector("#password");
 
-  // Get the form data
-  var sender = $('#sender').val();
-  var recipient = $('#recipient').val();
-  var message = $('#message').val();
+        togglePassword.addEventListener("click", function () {
+            // toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+            
+            // toggle the icon
+            this.classList.toggle("bi-eye");
+        });
 
-  // Send the message data to the PHP script via AJAX
-  $.ajax({
-    url: 'includes/send_message.inc.php',
-    type: 'POST',
-    data: { sender: sender, recipient: recipient, message: message },
-    success: function(response) {
-      // Clear the message input field
-      $('#message').val('');
-    }
-  });
-  alert("sending");
-});
-setInterval(function() {
-  // Get the recipient's name
-  var recipient = $('#recipient').val();
 
-  // Send an AJAX request to the PHP script to get new messages
-  $.ajax({
-    url: 'includes/get_messages.inc.php',
-    type: 'POST',
-    data: { recipient: recipient },
-    success: function(response) {
-      // Display the new messages
-      $('#chatbox').append(response);
-    }
-  });
-}, 1000); // Check for new messages every 1 second
-*/
 
 
 

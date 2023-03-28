@@ -9,14 +9,14 @@ include 'header.php';
                     
                     <li><img class="logo" src="images/icons/logoIcon.png"></li>
                     <li class="dropdown">
-                        <button class="dropbtn">Account</button>
+                        <button class="dropbtn"><ion-icon name="person"></ion-icon>Account</button>
                         <div class="dropdown-content">
                             
                         <?php
                             // check if user is logged in
                             if(isset($_SESSION['username'])) {
                                 echo '<button class="signin-btn" onclick="loginPage(\'profile.php\')">Profile</button>';
-                                echo '<button class="signin-btn" onclick="loginPage(\'#\')">My Orders</button>';
+                                
                                 echo '<button class="signin-btn" onclick="loginPage(\'includes/logout.inc.php\')">Log out</button>';
                                 
                             } else {
@@ -39,7 +39,7 @@ include 'header.php';
                     </li>
                         
                     <li class="dropdown">
-                        <button class="dropbtn">Help</button>
+                        <button class="dropbtn"><ion-icon name="help-circle"></ion-icon>Help</button>
                         <div class="dropdown-content">
                             <a href="#">Contacts</a>
                             <a href="#">support</a>
@@ -61,17 +61,17 @@ include 'header.php';
                 
                 
 
-                <label for="item_type">Type:</label>
+                <label for="item_type">item type:</label>
                 <select name="item_type" id="item_type" required>
                     <option value="">-- Select type of cake --</option>
-                    <option value="Cake">cake</option>
+                    <option value="cake">cake</option>
                     <option value="Bread">Bread</option>
                     <option value="cookies">Cookies</option>
                     <!-- Add more options as needed -->
                 </select>
                 
-                <label for="item_name">Name:</label>
-                <input type="text" name="item_name" id="item_name" required>
+                <label for="item_flavour">Name:</label>
+                <input type="text" name="item_flavour" id="item_flavour" required>
 
                 <label for="item_price">Price:</label>
                 <input type="number" name="item_price" id="item_price" min="10" step="0.1" required>

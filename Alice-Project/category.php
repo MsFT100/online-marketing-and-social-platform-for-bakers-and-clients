@@ -13,12 +13,12 @@ session_start();
             
             <li class="dropdown">
 
-                <button class="dropbtn" onclick="loginPage('index.php')">Home</button>
+                <button class="dropbtn" onclick="loginPage('index.php')"><ion-icon name="person"></ion-icon>Home</button>
 
             </li>
 
             <li class="dropdown">
-                <button class="dropbtn">Account</button>
+                <button class="dropbtn"><ion-icon name="person"></ion-icon>Account</button>
                 <div class="dropdown-content">
                     
                 <?php
@@ -51,9 +51,28 @@ session_start();
                 ?>
 
             </li>
-            
             <li class="dropdown">
-                <button class="dropbtn">Help</button>
+                    <?php
+                    $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
+                    $cartCount = count($cart);
+
+                    // check if user is logged in
+                    if(isset($_SESSION['username'])) {
+                        echo '<button class="dropbtn" onclick="loginPage(\'cart.php\')"><ion-icon name="cart"></ion-icon>cart</button>';
+                        echo '<div class="dropdown-content">';
+                        /*echo '<a href="cart.php">
+                        
+                        <span class="cart-count"><?php echo $cartCount; ?></span>
+                        </a>';*/
+                        echo '</div>';
+                    }
+                    
+                    ?>
+                    
+                  
+                </li>
+            <li class="dropdown">
+                <button class="dropbtn"><ion-icon name="help-circle"></ion-icon>Help</button>
                 <div class="dropdown-content">
                     <a href="#">Contacts</a>
                     <a href="#">support</a>
@@ -104,8 +123,8 @@ session_start();
                     echo "<p class='card-price'>Ksh:{$row['item_price']}</p>";
 
                     // When we press the add to cart button
-                    echo "<button class='add-to-cart-btn' data-item-id='{$row['id']}' data-item-name='{$row['item_name']}' data-item-price='{$row['item_price']}'
-                    onclick='addToCart({$row['id']}, \"{$row['item_name']}\", {$row['item_price']})'>Add to cart</button>";
+                    echo "<button class='add-to-cart-btn' data-item-id='{$row['id']}' data-item-name='{$row['item_name']}' data-item-price='{$row['item_price']}' data-item-image='{$filename}'
+                    onclick='addToCart({$row['id']}, \"{$row['item_name']}\", {$row['item_price']}, \"$filename\")' >Add to cart</button>";
                     echo "</div>"; // card-body
                     echo "</div>"; // card
                 }

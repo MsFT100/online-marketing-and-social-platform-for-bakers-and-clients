@@ -8,7 +8,7 @@ include_once 'header.php';
                 
                 <li><img class="logo" src="images/icons/logoIcon.png" alt='defaultImage'></li>
                 <li class="dropdown">
-                    <button class="dropbtn">Account</button>
+                    <button class="dropbtn"><ion-icon name="person"></ion-icon>Account</button>
                     <div class="dropdown-content">
                         
                     <?php
@@ -16,8 +16,8 @@ include_once 'header.php';
                        
                         // check if user is logged in
                         if(isset($_SESSION['username'])) {
-                            echo '<button class="signin-btn" onclick="loginPage(\'profile.php\')">Profile</button>';
-                            echo '<button class="signin-btn" onclick="loginPage(\'#\')">My Orders</button>';
+                            echo '<button class="signin-btn" onclick="loginPage(\'profile.php\')"><ion-icon name="person"></ion-icon>Profile</button>';
+                            
                             echo '<button class="signin-btn" onclick="loginPage(\'includes/logout.inc.php\')">Log out</button>';
                             
                         } else {
@@ -36,7 +36,7 @@ include_once 'header.php';
                     <?php
                         // check if user is logged in
                         if(isset($_SESSION['username'])) {
-                            echo '<button class="dropbtn" onclick="loginPage(\'sellpage.php\')">Sell</button>';
+                            echo '<button class="dropbtn" onclick="loginPage(\'sellpage.php\')"><ion-icon name="bag-handle"></ion-icon>Sell</button>';
                         }
                     ?>
 
@@ -45,7 +45,7 @@ include_once 'header.php';
                         <?php
                             // check if user is logged in
                             if(isset($_SESSION['username'])) {
-                                echo '<button class="dropbtn" onclick="loginPage(\'chat.php\')">Chat</button>';
+                                //echo '<button class="dropbtn" onclick="loginPage(\'chat.php\')"><ion-icon name="chatbox-ellipses"></ion-icon>Chat</button>';
                             }
                         ?>
 
@@ -57,12 +57,12 @@ include_once 'header.php';
 
                     // check if user is logged in
                     if(isset($_SESSION['username'])) {
-                        echo '<button class="dropbtn" onclick="loginPage(\'cart.php\')">cart</button>';
+                        echo '<button class="dropbtn" onclick="loginPage(\'cart.php\')"><ion-icon name="cart"></ion-icon>cart</button>';
                         echo '<div class="dropdown-content">';
-                        echo '<a href="cart.php">
-                        <i class="fa fa-shopping-cart"></i>
+                        /*echo '<a href="cart.php">
+                        
                         <span class="cart-count"><?php echo $cartCount; ?></span>
-                        </a>';
+                        </a>';*/
                         echo '</div>';
                     }
                     
@@ -72,7 +72,7 @@ include_once 'header.php';
                 </li>
                 
                 <li class="dropdown">
-                    <button class="dropbtn">Help</button>
+                    <button class="dropbtn"><ion-icon name="help-circle"></ion-icon>Help</button>
                     <div class="dropdown-content">
                         <a href="#">Contacts</a>
                         <a href="#">support</a>
@@ -100,35 +100,7 @@ include_once 'header.php';
         
     </header>
     <div class="container">
-    <div class="title">
-            <h2>profiles</h2>
-        </div>
-        <div class="profiles">
-            <?php
-            include 'includes/dbhlogin.inc.php';
-            include 'includes/functions.inc.php';
-            $profiles = getRandomBakers($conn);
-            //var_dump($profiles);
-                // Display the search results
-                if (count($profiles) > 0) {
-                    echo "<div class='cards-container'>";
-                    foreach ($profiles as $result) {
-                        echo "<div class='card-prof'>";
-                        $filename = basename($result['user_image']);
-                        echo "<img class='prof-img' src='images/profilepics/$filename' onclick='sendToProductPage(\"chat.php\", \"{$result['user_id']}\")' alt='defaultImage'>";
-                        echo "<div class='card-body'>";
-                        echo "<h5 class='card-title'>{$result['user_name']}</h5>";
-                        echo "<button onclick='sendToProductPage(\"chat.php\", \"{$result['user_id']}\")' >Write to</button>";
-                        
-                        echo "</div>"; // card-body
-                        echo "</div>"; // card
-                    }
-                    echo "</div>"; // cards-container
-                } else {
-                    echo "<p class='no-results'>No results found.</p>";
-                }
-            ?>
-        </div>
+        
         <div class="title">
             <h2>Our products</h2>
         </div>
@@ -277,8 +249,10 @@ include_once 'header.php';
                         echo "<h5 class='card-title'>{$result['item_name']}</h5>";
                         echo "<p class='card-price'>Ksh:{$result['item_price']}</p>";
                         //when we press the add to cart button
-                        echo "<button class='add-to-cart-btn' data-item-id='{$result['item_id']}' data-item-name='{$result['item_name']}' data-item-price='{$result['item_price']}'
-                        onclick='addToCart({$result['item_id']}, \"{$result['item_name']}\", {$result['item_price']})'>Add to cart</button>";
+                        echo "<button class='add-to-cart-btn' 
+                        data-item-id='{$result['item_id']}' data-item-name='{$result['item_name']}'
+                         data-item-price='{$result['item_price']}' data-item-image='{$filename}'
+                        onclick='addToCart({$result['item_id']}, \"{$result['item_name']}\", {$result['item_price']}, \"$filename\" )'>Add to cart</button>";
                         echo "</div>"; // card-body
                         echo "</div>"; // card
                     }
@@ -291,6 +265,36 @@ include_once 'header.php';
             ?>
 
             
+        </div>
+
+        <div class="title">
+            <h2>profiles</h2>
+        </div>
+        <div class="profiles">
+            <?php
+            include 'includes/dbhlogin.inc.php';
+            
+            $profiles = getRandomBakers($conn);
+            //var_dump($profiles);
+                // Display the search results
+                if (count($profiles) > 0) {
+                    echo "<div class='cards-container'>";
+                    foreach ($profiles as $result) {
+                        echo "<div class='card-prof'>";
+                        $filename = basename($result['user_image']);
+                        echo "<img class='prof-img' src='images/profilepics/$filename' onclick='sendToProductPage(\"chat.php\", \"{$result['user_id']}\")' alt='defaultImage'>";
+                        echo "<div class='card-body'>";
+                        echo "<h5 class='card-title'>{$result['user_name']}</h5>";
+                        echo "<button onclick='sendToProductPage(\"chat.php\", \"{$result['user_id']}\")' >Write to</button>";
+                        
+                        echo "</div>"; // card-body
+                        echo "</div>"; // card
+                    }
+                    echo "</div>"; // cards-container
+                } else {
+                    echo "<p class='no-results'>No results found.</p>";
+                }
+            ?>
         </div>
         <?php
     

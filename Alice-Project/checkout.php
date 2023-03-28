@@ -13,12 +13,12 @@ session_start();
                 
                 <li class="dropdown">
 
-                    <button class="dropbtn" onclick="loginPage('index.php')">Home</button>
+                    <button class="dropbtn" onclick="loginPage('index.php')"><ion-icon name="person"></ion-icon>Home</button>
 
                 </li>
 
                 <li class="dropdown">
-                    <button class="dropbtn">Account</button>
+                    <button class="dropbtn"><ion-icon name="person"></ion-icon>Account</button>
                     <div class="dropdown-content">
                         
                     <?php
@@ -46,14 +46,14 @@ session_start();
                     <?php
                         // check if user is logged in
                         if(isset($_SESSION['username'])) {
-                            echo '<button class="dropbtn" onclick="loginPage(\'sellpage.php\')">Sell</button>';
+                            echo '<button class="dropbtn" onclick="loginPage(\'sellpage.php\')"><ion-icon name="bag-handle"></ion-icon>Sell</button>';
                         }
                     ?>
 
                 </li>
                 
                 <li class="dropdown">
-                    <button class="dropbtn">Help</button>
+                    <button class="dropbtn"><ion-icon name="help-circle"></ion-icon>Help</button>
                     <div class="dropdown-content">
                         <a href="#">Contacts</a>
                         <a href="#">support</a>
@@ -94,18 +94,22 @@ session_start();
 
                 // Loop through the cart items and display them in a table
                 if (!empty($cartItems)) {
+                    
                 echo "<table>";
-                echo "<tr><th>Item Name</th><th>Price</th></tr>";
+                echo "<tr><th></th><th>Item Name</th><th>Price</th></tr>";
                 foreach ($cartItems as $item) {
                     $itemId = $item['id'];
                     $itemName = $item['name'];
                     $itemPrice = $item['price'];
+                    $itemImage = $item['image'];
                     $totalPrice += $itemPrice;
                     //echo $itemId;
                     echo "<tr>";
                     echo "<tr id='item-{$itemId}'>";
-                    echo "<td>{$itemName}</td>";
+                    echo "<td><img class='card-table' src='images/uploadedImages/$itemImage'></td>";
+                    echo "<td>{$itemName}</td>";            
                     echo "<td>{$itemPrice}</td>";
+
                     echo "</tr>";
                 }
                 echo "<tr><td><strong>Total</strong></td><td>{$totalPrice}</td></tr>";

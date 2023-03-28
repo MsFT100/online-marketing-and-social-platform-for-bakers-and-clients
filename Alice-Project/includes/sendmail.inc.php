@@ -10,6 +10,4 @@ $message = $_POST["message"];
 // Send email and check for errors
 sendTo($name, $sender_email, $recipient_email, $message);
 
-
-
 ?>

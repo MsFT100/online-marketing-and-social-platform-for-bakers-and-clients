@@ -193,9 +193,6 @@ function changeProfile($conn, $profilePic, $email, $address, $about){
     }
 }
 
-
-
-
 //search bar implementation
 function searchItems($conn, $search_query){
     if (isset($_GET['search'])) {
@@ -273,6 +270,7 @@ function getProducts($conn){
     echo json_encode($products);
 }
 
+
 function searchProducts($conn, $searchTerm){
 
     // Perform the search query here
@@ -300,6 +298,7 @@ function searchProducts($conn, $searchTerm){
 
 function getRandomProducts($conn){
     // Perform the search query here
+    
     $sql = "SELECT * FROM items ORDER BY RAND() LIMIT 8";
     $result = $conn->query($sql);
 
@@ -321,7 +320,30 @@ function getRandomProducts($conn){
     // Return the search results array
     return $randomResults;
 }
+function getSimilarProducts($conn){
+    // Perform the search query here
+        
+    $sql = "SELECT * FROM items ORDER BY RAND() LIMIT 15";
+    $result = $conn->query($sql);
 
+    // Create an array to hold the search results
+    $randomResults = array();
+
+    // Loop through the search results and add them to the array
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $randomResults[] = array(
+                'item_id' => $row['id'],
+                'item_image' => $row['item_image'],
+                'item_name' => $row['item_name'],
+                'item_price' => $row['item_price']
+            );
+        }
+    }
+
+    // Return the search results array
+    return $randomResults;
+}
 function getRandomBakers($conn){
     // Perform the search query here
     $sql = "SELECT * FROM users ORDER BY RAND() LIMIT 5";
@@ -452,7 +474,7 @@ function addPaymentDetails($conn){
 function sendEmail($conn){
     $order_id = $_SESSION['order_id'];
     //var_dump($order_id);
-// Retrieve the buyer's email from the database
+    // Retrieve the buyer's email from the database
     $sql = "SELECT email FROM orders WHERE id = $order_id";
     $result = $conn->query($sql);
     //$row = $result->fetch_assoc();
@@ -496,7 +518,8 @@ function sendTo($name, $sender_email, $recipient_email, $message) {
     } else {
         echo "Failed to send email.";
     }
-    header("location: ../chat.php?id=5");
+    //header("location: ../chat.php?id=5");
+    header("location: ../index.php");
 }
 
 function getItem($conn, $id){

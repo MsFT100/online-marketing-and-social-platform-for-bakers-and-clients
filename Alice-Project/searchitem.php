@@ -12,12 +12,12 @@ include 'header.php';
                 
                 <li class="dropdown">
 
-                    <button class="dropbtn" onclick="loginPage('index.php')">Home</button>
+                    <button class="dropbtn" onclick="loginPage('index.php')"><ion-icon name="home"></ion-icon>Home</button>
 
                 </li>
 
                 <li class="dropdown">
-                    <button class="dropbtn">Account</button>
+                    <button class="dropbtn"><ion-icon name="person"></ion-icon>Account</button>
                     <div class="dropdown-content">
                         
                     <?php
@@ -45,7 +45,7 @@ include 'header.php';
                     <?php
                         // check if user is logged in
                         if(isset($_SESSION['username'])) {
-                            echo '<button class="dropbtn" onclick="loginPage(\'sellpage.php\')">Sell</button>';
+                            echo '<button class="dropbtn" onclick="loginPage(\'sellpage.php\')"><ion-icon name="bag-handle"></ion-icon>Sell</button>';
                         }
                     ?>
 
@@ -57,7 +57,7 @@ include 'header.php';
 
                     // check if user is logged in
                     if(isset($_SESSION['username'])) {
-                        echo '<button class="dropbtn" onclick="loginPage(\'cart.php\')">cart</button>';
+                        echo '<button class="dropbtn" onclick="loginPage(\'cart.php\')"><ion-icon name="cart"></ion-icon>cart</button>';
                         echo '<div class="dropdown-content">';
                         echo '<a href="cart.php">
                         <i class="fa fa-shopping-cart"></i>
@@ -72,7 +72,7 @@ include 'header.php';
                 </li>
                 
                 <li class="dropdown">
-                    <button class="dropbtn">Help</button>
+                    <button class="dropbtn"><ion-icon name="help-circle"></ion-icon>Help</button>
                     <div class="dropdown-content">
                         <a href="#">Contacts</a>
                         <a href="#">support</a>
@@ -122,8 +122,10 @@ include 'header.php';
                     echo "<p class='card-price'>Ksh:{$result['item_price']}</p>";
             
                     //when we press the add to cart button
-                    echo "<button class='add-to-cart-btn' data-item-id='{$result['item_id']}' data-item-name='{$result['item_name']}' data-item-price='{$result['item_price']}'
-                     onclick='addToCart({$result['item_id']}, \"{$result['item_name']}\", {$result['item_price']})'>Add to cart</button>";
+                    echo "<button class='add-to-cart-btn' 
+                        data-item-id='{$result['item_id']}' data-item-name='{$result['item_name']}'
+                         data-item-price='{$result['item_price']}' data-item-image='{$filename}'
+                        onclick='addToCart({$result['item_id']}, \"{$result['item_name']}\", {$result['item_price']}, \"$filename\" )'>Add to cart</button>";
                     echo "</div>"; // card-body
                     echo "</div>"; // card
                 }

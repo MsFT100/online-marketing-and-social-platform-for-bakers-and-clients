@@ -9,7 +9,7 @@ include_once 'header.php';
                     <li><img class="logo" src="images/icons/logoIcon.png"></li>
                     
                     <li class="dropdown">
-                        <button class="dropbtn">Help</button>
+                        <button class="dropbtn"><ion-icon name="help-circle"></ion-icon>Help</button>
                         <div class="dropdown-content">
                             <a href="#">Contacts</a>
                             <a href="#">support</a>
@@ -42,6 +42,7 @@ include_once 'header.php';
                     <input type="text" name="uid" placeholder="username...." id="username" required>
 
                     <input type="password" name="pwd" placeholder="password..." id="password" required>
+                    <i class="bi bi-eye-slash" id="togglePassword"></i>
 
                     <button class="btn" type="submit" name="submit">Log in</button>
                     
