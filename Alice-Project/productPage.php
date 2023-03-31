@@ -37,7 +37,16 @@ include 'header.php';
                         <?php
                             // check if user is logged in
                             if(isset($_SESSION['username'])) {
-                                echo '<button class="dropbtn" onclick="loginPage(\'chat.php\')">Chat</button>';
+                                echo '<button class="dropbtn" onclick="loginPage(\'myOrders.php\')">Chat</button>';
+                            }
+                        ?>
+
+                    </li>
+                <li class="dropdown">
+                        <?php
+                            // check if user is logged in
+                            if(isset($_SESSION['username'])) {
+                                echo '<button class="dropbtn" onclick="loginPage(\'chat.php\')"><ion-icon name="bag-check"></ion-icon>myOrders</button>';
                             }
                         ?>
 
@@ -94,6 +103,7 @@ include 'header.php';
 
             // Get the item details using the getItem() function
             $item = getItem($conn, $id);
+            $quanity;
             //var_dump($item);
             $filename = basename($item[0]['item_image']);
             // Display the item details
@@ -103,10 +113,19 @@ include 'header.php';
             echo "<h1 class='product-name'>" . $item[0]['item_name'] . "</h1>";
             echo "<p class='product-description'>" . $item[0]['item_description'] . "</p>";
             echo "<p class='price'>Price: ksh" . $item[0]['item_price'] . "</p>";
+            
             echo '<div class="card-btn">';
+            
             echo "<button class='add-to-cart-btn' data-item-id='{$item[0]['item_id']}' data-item-name='{$item[0]['item_name']}' data-item-price='{$item[0]['item_price']}' data-item-price='{$item[0]['item_image']}'
                     onclick='buyNow({$item[0]['item_id']}, \"{$item[0]['item_name']}\", {$item[0]['item_price']},  \"$filename\")'>Buy now</button>";
                     
+                    
+            echo '<form>';
+            echo '<input type="number" id="quantity"name="quantity" value="1" min="1" required>';
+            
+            echo '</form>';
+                    
+            
             echo "<button class='add-to-cart-btn' data-item-id='{$item[0]['item_id']}' data-item-name='{$item[0]['item_name']}' data-item-price='{$item[0]['item_price']}' data-item-price='{$item[0]['item_image']}'
                     onclick='addToCart({$item[0]['item_id']}, \"{$item[0]['item_name']}\", {$item[0]['item_price']},  \"$filename\")'>Add to cart</button>";
             echo '</div>';

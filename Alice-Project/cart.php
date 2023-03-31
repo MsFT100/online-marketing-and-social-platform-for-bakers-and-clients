@@ -55,7 +55,7 @@ session_start();
                         <?php
                             // check if user is logged in
                             if(isset($_SESSION['username'])) {
-                                //echo '<button class="dropbtn" onclick="loginPage(\'chat.php\')">Chat</button>';
+                                echo '<button class="dropbtn" onclick="loginPage(\'myOrders.php\')"><ion-icon name="bag-check"></ion-icon>myOrders</button>';
                             }
                         ?>
 
@@ -99,19 +99,23 @@ session_start();
                         // Loop through the cart items and display them in a table
                         if (!empty($cartItems)) {
                         echo "<table>";
-                        echo "<tr><th>Item Name</th><th>Price</th><th></th></tr>";
+                        echo "<tr><th></th><th>Item Name</th><th>Price</th><th>Quantity</th><th></th></tr>";
                         foreach ($cartItems as $item) {
                             $itemId = $item['id'];
                             $itemName = $item['name'];
                             $itemPrice = $item['price'];
                             $itemImage = $item['image'];
-                            $totalPrice += $itemPrice;
+                            $itemQuantity = $item['quantity'];
+                            
+                            $totalPrice += $itemPrice * $itemQuantity;
+
                             //echo $itemId;
                             echo "<tr>";
                             echo "<tr id='item-{$itemId}'>";
                             echo "<td><img class='card-table' src='images/uploadedImages/$itemImage'></td>";
                             echo "<td>{$itemName}</td>";
                             echo "<td>{$itemPrice}</td>";
+                            echo "<td>{$itemQuantity}</td>";
                             
                             echo "<td><button onclick=\"removeItem('{$itemId}')\">Remove</button></td>";
 

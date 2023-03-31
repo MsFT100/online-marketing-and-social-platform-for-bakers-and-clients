@@ -3,7 +3,7 @@
 var glbStaffCurrentDisplayID;
 var glbAdminCurrentDisplayID;
 window.onload = function() {
-    console.log("sttartOfDEBUG");
+    //console.log("sttartOfDEBUG");
     //Gettig the path on our browser
     var currentDocument = window.location.pathname.split('/').pop();
      
@@ -127,7 +127,15 @@ function addToCart(item_id, item_name, item_price, item_image) {
     const itemName = item_name;
     const itemPrice = item_price;
     const itemImage = item_image;
-  
+    // Retrieve the quantity value from the input field
+    //const quantity = document.querySelector('input[name="quantity"]').value;
+    const quantityInput = document.querySelector('input[name="quantity"]');
+    console.log('quantityInput',quantityInput);
+    if(quantityInput == null){
+      quantity = 1;
+    }
+    //const quantity = quantityInput.value !== '' ? parseInt(quantityInput.value) : 1;
+    console.log(quantity);
     // Send an AJAX request to add the item to the cart
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'includes/cart.inc.php');
@@ -136,7 +144,7 @@ function addToCart(item_id, item_name, item_price, item_image) {
       // Handle the response from the server
       console.log(xhr.responseText);
     };
-    xhr.send(`itemId=${itemId}&itemName=${itemName}&itemPrice=${itemPrice}&itemImage=${itemImage}`);
+    xhr.send(`itemId=${itemId}&itemName=${itemName}&itemPrice=${itemPrice}&itemImage=${itemImage}&itemQuantity=${quantity}`);
     alert("Added to cart");
     
     
@@ -195,17 +203,19 @@ function confirmDelete(itemId) {
   }
 }
 
-const togglePassword = document.querySelector("#togglePassword");
-        const password = document.querySelector("#password");
-
-        togglePassword.addEventListener("click", function () {
-            // toggle the type attribute
-            const type = password.getAttribute("type") === "password" ? "text" : "password";
-            password.setAttribute("type", type);
-            
-            // toggle the icon
-            this.classList.toggle("bi-eye");
-        });
+function showPassword() {
+  var passwordField = document.getElementById("password");
+  var eyeIcon = document.getElementById("eye");
+  if (passwordField.type === "password") {
+      passwordField.type = "text";
+      eyeIcon.setAttribute("name", "eye");
+      eyeIcon.setAttribute("name", "eye-off");
+  } else {
+      passwordField.type = "password";
+      eyeIcon.setAttribute("name", "eye-off");
+      eyeIcon.setAttribute("name", "eye");
+  }
+}
 
 
 

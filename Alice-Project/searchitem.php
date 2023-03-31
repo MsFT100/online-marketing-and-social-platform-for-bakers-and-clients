@@ -51,6 +51,15 @@ include 'header.php';
 
                 </li>
                 <li class="dropdown">
+                        <?php
+                            // check if user is logged in
+                            if(isset($_SESSION['username'])) {
+                                echo '<button class="dropbtn" onclick="loginPage(\'myOrders.php\')"><ion-icon name="bag-check"></ion-icon>myOrders</button>';
+                            }
+                        ?>
+
+                    </li>
+                <li class="dropdown">
                     <?php
                     $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
                     $cartCount = count($cart);

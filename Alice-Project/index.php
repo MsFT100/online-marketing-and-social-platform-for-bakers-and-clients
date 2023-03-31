@@ -45,7 +45,7 @@ include_once 'header.php';
                         <?php
                             // check if user is logged in
                             if(isset($_SESSION['username'])) {
-                                //echo '<button class="dropbtn" onclick="loginPage(\'chat.php\')"><ion-icon name="chatbox-ellipses"></ion-icon>Chat</button>';
+                                echo '<button class="dropbtn" onclick="loginPage(\'myOrders.php\')"><ion-icon name="bag-check"></ion-icon>myOrders</button>';
                             }
                         ?>
 
@@ -57,12 +57,10 @@ include_once 'header.php';
 
                     // check if user is logged in
                     if(isset($_SESSION['username'])) {
-                        echo '<button class="dropbtn" onclick="loginPage(\'cart.php\')"><ion-icon name="cart"></ion-icon>cart</button>';
-                        echo '<div class="dropdown-content">';
-                        /*echo '<a href="cart.php">
+                        echo '<button class="dropbtn" onclick="loginPage(\'cart.php\')"><ion-icon name="cart"></ion-icon>
                         
-                        <span class="cart-count"><?php echo $cartCount; ?></span>
-                        </a>';*/
+                        cart<span class="cart-count">' . $cartCount . '</span></button>';
+
                         echo '</div>';
                     }
                     

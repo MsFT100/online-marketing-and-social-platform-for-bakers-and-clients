@@ -51,7 +51,15 @@ session_start();
                     ?>
 
                 </li>
-                
+                <li class="dropdown">
+                        <?php
+                            // check if user is logged in
+                            if(isset($_SESSION['username'])) {
+                                echo '<button class="dropbtn" onclick="loginPage(\'myOrders.php\')"><ion-icon name="bag-check"></ion-icon>myOrders</button>';
+                            }
+                        ?>
+
+                    </li>
                 <li class="dropdown">
                     <button class="dropbtn">Help</button>
                     <div class="dropdown-content">

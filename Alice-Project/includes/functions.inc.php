@@ -412,9 +412,29 @@ function processItems($conn){
         $notes = $_POST['notes'];
         $specifics = $_POST['specifics'];
         $user_id = $_SESSION['username']; // Replace with your session variable name
+        
+        // Retrieve the cart items from the session variable
+        $cartItems = isset($_SESSION['cart']) ? json_decode(json_encode($_SESSION['cart']), true) : array();
+        // Insert the cart items into the database
+        foreach ($cartItems as $item) {
+            $itemId = $item['id'];
+            $itemName = $item['name'];
+            $itemPrice = $item['price'];
+            $itemImage = $item['image'];
+            $itemQuantity = $item['quantity'];
+            // insert the cart item into the database
+            // ...
+            $thsql = "INSERT INTO myorders (item, price, image, quantity, username, description) 
+            VALUES ('$itemName', '$itemPrice', '$itemImage', '$itemQuantity', '$user_id', $specifics)";
+            $conn->query($thsql);
+            unset($_SESSION['cart']);
+        
+            // Clear the cart items from the session variable
+            //unset($_SESSION['cart']);
+        }
         // Do something with the data (e.g. insert into database)
         // ...
-         // Insert the order details into the database
+        // Insert the order details into the database
         $sql = "INSERT INTO orders (item_name, user_id, delivery_address, city, county, zip, phone, email, product_specs, delivery_instructions)
         VALUES ('$name','$user_id', '$address', '$city', '$state', '$zip', '$phone', '$email', '$specifics','$notes')";
 
@@ -423,11 +443,13 @@ function processItems($conn){
         } else {
         echo "Error adding order: " . $conn->error;
         }
+        
         $order_id = mysqli_insert_id($conn);
         $_SESSION['order_id'] = $order_id;
         // Close the database connection
         $conn->close();
         header('Location: ../payment.php'); 
+        
     }
 }
 

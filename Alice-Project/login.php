@@ -42,8 +42,12 @@ include_once 'header.php';
                     <input type="text" name="uid" placeholder="username...." id="username" required>
 
                     <input type="password" name="pwd" placeholder="password..." id="password" required>
-                    <i class="bi bi-eye-slash" id="togglePassword"></i>
+                    <span>
 
+                        <ion-icon name="eye-off" id="eye" style="font-size: 23px;" onclick="showPassword()"></ion-icon>
+                    </span>
+                    <!--<input type="checkbox" id="show-password" onchange="showPassword()">-->
+                    
                     <button class="btn" type="submit" name="submit">Log in</button>
                     
                     <a href="signup.php">Sign Up</a><br><br>

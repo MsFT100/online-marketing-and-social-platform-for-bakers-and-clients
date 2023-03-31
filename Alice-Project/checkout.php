@@ -51,7 +51,15 @@ session_start();
                     ?>
 
                 </li>
-                
+                <li class="dropdown">
+                        <?php
+                            // check if user is logged in
+                            if(isset($_SESSION['username'])) {
+                                echo '<button class="dropbtn" onclick="loginPage(\'myOrders.php\')"><ion-icon name="bag-check"></ion-icon>myOrders</button>';
+                            }
+                        ?>
+
+                    </li>
                 <li class="dropdown">
                     <button class="dropbtn"><ion-icon name="help-circle"></ion-icon>Help</button>
                     <div class="dropdown-content">
@@ -96,20 +104,22 @@ session_start();
                 if (!empty($cartItems)) {
                     
                 echo "<table>";
-                echo "<tr><th></th><th>Item Name</th><th>Price</th></tr>";
+                echo "<tr><th></th><th>Item Name</th><th>Price</th><th>Quantity</th><th></th></tr>";
                 foreach ($cartItems as $item) {
                     $itemId = $item['id'];
                     $itemName = $item['name'];
                     $itemPrice = $item['price'];
                     $itemImage = $item['image'];
-                    $totalPrice += $itemPrice;
+                    $itemQuantity = $item['quantity'];
+                            
+                    $totalPrice += $itemPrice * $itemQuantity;
                     //echo $itemId;
                     echo "<tr>";
                     echo "<tr id='item-{$itemId}'>";
                     echo "<td><img class='card-table' src='images/uploadedImages/$itemImage'></td>";
                     echo "<td>{$itemName}</td>";            
                     echo "<td>{$itemPrice}</td>";
-
+                    echo "<td>{$itemQuantity}</td>";
                     echo "</tr>";
                 }
                 echo "<tr><td><strong>Total</strong></td><td>{$totalPrice}</td></tr>";

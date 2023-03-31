@@ -48,6 +48,10 @@ include_once 'header.php';
                     <input type="text" name="uid" placeholder="Enter username here" required>
 
                     <input type="password" name="pwd" placeholder="Enter password here" required>
+                    <span>
+
+                        <ion-icon name="eye-off" id="eye" style="font-size: 23px;" onclick="showPassword()"></ion-icon>
+                    </span>
                     <input type="password" name="pwdrepeat" placeholder="Repeat password" required>
 
                     <button class="btn" type="submit" name="submit">Sign Up</button>

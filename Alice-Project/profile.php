@@ -38,6 +38,15 @@ include 'header.php';
                         <?php
                             // check if user is logged in
                             if(isset($_SESSION['username'])) {
+                                echo '<button class="dropbtn" onclick="loginPage(\'myOrders.php\')"><ion-icon name="bag-check"></ion-icon>myOrders</button>';
+                            }
+                        ?>
+
+                    </li>
+                <li class="dropdown">
+                        <?php
+                            // check if user is logged in
+                            if(isset($_SESSION['username'])) {
                                 echo '<button class="dropbtn" onclick="loginPage(\'chat.php\')"><ion-icon name="chatbox-ellipses"></ion-icon>Chat</button>';
                             }
                         ?>
